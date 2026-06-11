@@ -1,9 +1,18 @@
 import BookingForm from '@/components/public/BookingForm'
 import { prisma } from '@/lib/prisma'
 import { Clock, MapPin, Phone, CheckCircle } from 'lucide-react'
+import { fetchSettings } from '@/lib/fetchSettings'
 
 export default async function BookingPage() {
-  const services = await prisma.service.findMany({ where: { active: true }, orderBy: { order: 'asc' }, select: { id: true, title: true, price: true, category: true } })
+  const [services, settings] = await Promise.all([
+    prisma.service.findMany({ where: { active: true }, orderBy: { order: 'asc' }, select: { id: true, title: true, price: true, category: true } }),
+    fetchSettings(),
+  ])
+  const phone = settings.phone || '+251 911 234 567'
+  const phoneDigits = phone.replace(/[\s\-()]/g, '')
+  const businessHours = settings.business_hours || 'Mon–Sat: 8AM–8PM'
+  const address = settings.address || 'Addis Ababa, Ethiopia'
+
   return (
     <div>
       <section className="hero-gradient text-white py-16 px-4">
@@ -52,9 +61,9 @@ export default async function BookingPage() {
               <div className="card p-6">
                 <h3 className="font-bold text-gray-900 mb-4">Contact Us Directly</h3>
                 <div className="space-y-3">
-                  <a href="tel:+251911234567" className="flex items-center gap-3 text-sm text-gray-600 hover:text-red-700"><Phone size={15} style={{color:'#b31942'}} />+251 911 234 567</a>
-                  <div className="flex items-center gap-3 text-sm text-gray-600"><Clock size={15} style={{color:'#b31942'}} />Mon–Sat: 8AM–8PM</div>
-                  <div className="flex items-center gap-3 text-sm text-gray-600"><MapPin size={15} style={{color:'#b31942'}} />Addis Ababa, Ethiopia</div>
+                  <a href={`tel:${phoneDigits}`} className="flex items-center gap-3 text-sm text-gray-600 hover:text-red-700"><Phone size={15} style={{color:'#b31942'}} />{phone}</a>
+                  <div className="flex items-center gap-3 text-sm text-gray-600"><Clock size={15} style={{color:'#b31942'}} />{businessHours}</div>
+                  <div className="flex items-center gap-3 text-sm text-gray-600"><MapPin size={15} style={{color:'#b31942'}} />{address}</div>
                 </div>
               </div>
             </div>

@@ -1,7 +1,18 @@
 import ContactForm from '@/components/public/ContactForm'
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from 'lucide-react'
+import { fetchSettings } from '@/lib/fetchSettings'
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await fetchSettings()
+  const phone = settings.phone || '+251 911 234 567'
+  const phoneDigits = phone.replace(/[\s\-()]/g, '')
+  const email = settings.email || 'info@techservepro.com'
+  const address = settings.address || 'Addis Ababa, Ethiopia'
+  const businessHours = settings.business_hours || 'Mon–Sat: 8AM–8PM\nSun: 10AM–5PM'
+  const whatsapp = settings.whatsapp || '251911234567'
+  const telegram = settings.telegram || 'https://t.me/techservepro'
+  const whatsappUrl = whatsapp.startsWith('http') ? whatsapp : `https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`
+
   return (
     <div>
       <section className="hero-gradient text-white py-20 px-4">
@@ -22,10 +33,10 @@ export default function ContactPage() {
                 <h3 className="font-bold text-gray-900 mb-5">Contact Information</h3>
                 <div className="space-y-4">
                   {[
-                    { icon: Phone, label: 'Phone', val: '+251 911 234 567', href: 'tel:+251911234567' },
-                    { icon: Mail, label: 'Email', val: 'info@techservepro.com', href: 'mailto:info@techservepro.com' },
-                    { icon: MapPin, label: 'Location', val: 'Addis Ababa, Ethiopia', href: null },
-                    { icon: Clock, label: 'Hours', val: 'Mon–Sat: 8AM–8PM\nSun: 10AM–5PM', href: null },
+                    { icon: Phone, label: 'Phone', val: phone, href: `tel:${phoneDigits}` },
+                    { icon: Mail, label: 'Email', val: email, href: `mailto:${email}` },
+                    { icon: MapPin, label: 'Location', val: address, href: null },
+                    { icon: Clock, label: 'Hours', val: businessHours, href: null },
                   ].map(c => (
                     <div key={c.label} className="flex gap-3">
                       <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{background:'#fff1f4'}}>
@@ -46,10 +57,10 @@ export default function ContactPage() {
               <div className="card p-6">
                 <h3 className="font-bold text-gray-900 mb-4">Reach us on Social</h3>
                 <div className="space-y-3">
-                  <a href="https://wa.me/251911234567" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl text-sm font-medium text-green-700 transition-colors hover:bg-green-50">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl text-sm font-medium text-green-700 transition-colors hover:bg-green-50">
                     <MessageCircle size={18} /> WhatsApp Chat
                   </a>
-                  <a href="https://t.me/techservepro" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl text-sm font-medium text-blue-700 transition-colors hover:bg-blue-50">
+                  <a href={telegram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl text-sm font-medium text-blue-700 transition-colors hover:bg-blue-50">
                     <Send size={18} /> Telegram Channel
                   </a>
                 </div>

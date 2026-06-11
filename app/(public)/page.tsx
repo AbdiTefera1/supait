@@ -16,6 +16,10 @@ async function getData() {
 
 export default async function HomePage() {
   const { services, testimonials, settings } = await getData()
+  const phone = settings.phone || '+251 911 234 567'
+  const phoneDigits = phone.replace(/[\s\-()]/g, '')
+  const whatsapp = settings.whatsapp || '251911234567'
+  const whatsappNum = whatsapp.replace(/[^0-9]/g, '')
 
   const whyUs = [
     { icon: Zap, title: 'Same-Day Service', desc: 'We respond fast. Most issues resolved within hours of your call.' },
@@ -51,7 +55,7 @@ export default async function HomePage() {
                 <Link href="/booking" className="btn-white text-base px-6 py-3">
                   Book a Service <ArrowRight size={18} />
                 </Link>
-                <a href="https://wa.me/251911234567" className="btn-outline border-white text-white hover:bg-white hover:text-red-700 text-base px-6 py-3">
+                <a href={`https://wa.me/${whatsappNum}`} className="btn-outline border-white text-white hover:bg-white hover:text-red-700 text-base px-6 py-3">
                   <MessageCircle size={18} /> WhatsApp Us
                 </a>
               </div>
@@ -73,8 +77,8 @@ export default async function HomePage() {
                   </div>
                   <div className="space-y-3">
                     {[
-                      { icon: Phone, label: 'Call Us', val: '+251 911 234 567', href: 'tel:+251911234567' },
-                      { icon: MessageCircle, label: 'WhatsApp', val: 'Chat Instantly', href: 'https://wa.me/251911234567' },
+                      { icon: Phone, label: 'Call Us', val: phone, href: `tel:${phoneDigits}` },
+                      { icon: MessageCircle, label: 'WhatsApp', val: 'Chat Instantly', href: `https://wa.me/${whatsappNum}` },
                     ].map(c => (
                       <a key={c.label} href={c.href} className="flex items-center gap-4 p-4 rounded-xl transition-all" style={{background:'rgba(255,255,255,0.1)'}} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
                         <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{background:'rgba(255,255,255,0.2)'}}>
@@ -219,7 +223,7 @@ export default async function HomePage() {
           <p className="text-red-100 text-lg mb-8">Book a service today. We respond fast, we come to you, and we get the job done right.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/booking" className="btn-white text-base px-8 py-3">Book Now — It's Easy</Link>
-            <a href="tel:+251911234567" className="btn-outline border-white text-white hover:bg-white hover:text-red-700 text-base px-8 py-3">
+            <a href={`tel:${phoneDigits}`} className="btn-outline border-white text-white hover:bg-white hover:text-red-700 text-base px-8 py-3">
               <Phone size={18} /> Call Us Now
             </a>
           </div>
