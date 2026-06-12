@@ -1,121 +1,95 @@
 import Link from 'next/link'
-import { CheckCircle, X } from 'lucide-react'
+import { CheckCircle, X, Star, ArrowRight, ShieldCheck } from 'lucide-react'
+import { prisma } from '@/lib/prisma'
 
-const packages = [
-  {
-    name: 'Home User', price: '800', unit: 'one-time visit', color: 'white',
-    features: [
-      {f:'OS & driver updates', inc:true},
-      {f:'Virus scan & removal', inc:true},
-      {f:'Speed optimization', inc:true},
-      {f:'Printer setup', inc:true},
-      {f:'Wi-Fi configuration', inc:true},
-      {f:'30-day follow-up call', inc:true},
-      {f:'Monthly visits', inc:false},
-      {f:'Remote support', inc:false},
-      {f:'Data backup monitoring', inc:false},
-    ]
-  },
-  {
-    name: 'Family Security', price: '1,500', unit: 'setup + 400/mo', color: 'white', popular: false,
-    features: [
-      {f:'Parental controls (all devices)', inc:true},
-      {f:'Website blocking & time limits', inc:true},
-      {f:'Antivirus on all PCs', inc:true},
-      {f:'Automated backup setup', inc:true},
-      {f:'Monthly check-in call', inc:true},
-      {f:'WhatsApp support', inc:true},
-      {f:'On-site visits', inc:false},
-      {f:'Employee management', inc:false},
-      {f:'Priority support', inc:false},
-    ]
-  },
-  {
-    name: 'Small Business IT', price: '1,500', unit: '/month', color: '#b31942', textColor: 'white', popular: true,
-    features: [
-      {f:'Full network setup', inc:true},
-      {f:'Employee access management', inc:true},
-      {f:'2 on-site visits/month', inc:true},
-      {f:'Remote support (WhatsApp)', inc:true},
-      {f:'Monthly security updates', inc:true},
-      {f:'Data backup monitoring', inc:true},
-      {f:'Priority 24hr response', inc:true},
-      {f:'Staff training (basic)', inc:true},
-      {f:'Google Business Profile', inc:false},
-    ]
-  },
-  {
-    name: 'Website + Maintenance', price: '8,000', unit: 'build + 800/mo', color: 'white',
-    features: [
-      {f:'5-page professional website', inc:true},
-      {f:'Mobile-responsive design', inc:true},
-      {f:'Google Business Profile', inc:true},
-      {f:'Business email setup', inc:true},
-      {f:'Monthly content update', inc:true},
-      {f:'Basic SEO optimization', inc:true},
-      {f:'On-site IT support', inc:false},
-      {f:'Network management', inc:false},
-      {f:'Staff training', inc:false},
-    ]
-  },
-  {
-    name: 'Business Pro', price: '3,000', unit: '/month', color: '#1f2937', textColor: 'white',
-    features: [
-      {f:'Full network infrastructure', inc:true},
-      {f:'Website + Google presence', inc:true},
-      {f:'Business email (all staff)', inc:true},
-      {f:'Staff computer training', inc:true},
-      {f:'Security & backup system', inc:true},
-      {f:'4 on-site visits/month', inc:true},
-      {f:'Priority 4hr response', inc:true},
-      {f:'Monthly IT report', inc:true},
-      {f:'Dedicated IT manager', inc:true},
-    ]
-  },
-]
+export default async function PackagesPage() {
+  const dbPackages = await prisma.package.findMany({
+    where: { active: true },
+    orderBy: { order: 'asc' }
+  })
 
-export default function PackagesPage() {
   return (
     <div>
-      <section className="hero-gradient text-white py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4">Service Packages</h1>
-          <p className="text-red-100 text-lg max-w-2xl mx-auto">Choose the right plan for your home or business. All packages include a satisfaction guarantee and transparent pricing.</p>
+      <section className="hero-gradient text-white py-24 px-4 text-center">
+        <div className="max-w-4xl mx-auto animate-fade-up">
+          <span className="inline-block py-1 px-3 rounded-full bg-white/10 text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-md border border-white/20 shadow-lg">Pricing Plans</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 font-heading">Service Packages</h1>
+          <p className="text-primary-100 text-lg sm:text-xl max-w-2xl mx-auto font-medium">Choose the right plan for your home or business. All packages include a satisfaction guarantee and 100% transparent pricing.</p>
         </div>
       </section>
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {packages.map(p => (
-              <div key={p.name} className="rounded-2xl overflow-hidden shadow-md relative flex flex-col" style={{background: p.color || 'white'}}>
-                {p.popular && (
-                  <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">Most Popular</div>
-                )}
-                <div className="p-8 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold mb-1" style={{color: p.textColor || '#111827'}}>{p.name}</h3>
-                  <div className="flex items-end gap-1 mb-6">
-                    <span className="text-4xl font-bold" style={{color: p.textColor || '#b31942'}}>{p.price}</span>
-                    <span className="text-sm mb-1.5 opacity-60" style={{color: p.textColor || '#6b7280'}}>ETB {p.unit}</span>
+
+      <section className="section-padding bg-surface-warm relative overflow-hidden">
+        {/* Decorative blobs */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-50 rounded-full filter blur-[100px] opacity-60 -translate-y-1/2 translate-x-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-50 rounded-full filter blur-[80px] opacity-60 translate-y-1/3 -translate-x-1/4"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center lg:px-4">
+            {dbPackages.length > 0 ? dbPackages.map((p, idx) => {
+              const features = (p.features as any[]) || []
+              return (
+                <div key={p.id} className={`rounded-[2rem] overflow-hidden shadow-xl relative flex flex-col transition-all duration-500 hover:-translate-y-2 animate-fade-up stagger-${(idx % 3) + 1} ${p.popular ? 'package-popular lg:-mx-4 min-h-[600px]' : 'min-h-[560px]'}`} style={{background: p.color || 'white'}}>
+                  {p.popular && (
+                    <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary via-accent to-primary animate-shimmer" style={{backgroundSize: '200% 100%'}}></div>
+                  )}
+                  {p.popular && (
+                    <div className="absolute top-6 right-6 bg-yellow-400 text-yellow-900 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
+                      <Star size={12} fill="currentColor" /> Most Popular
+                    </div>
+                  )}
+                  <div className={`p-8 sm:p-10 flex-1 flex flex-col ${p.popular ? 'pt-12' : ''}`}>
+                    <h3 className="text-2xl font-bold mb-2 font-heading" style={{color: p.textColor || 'var(--text-primary)'}}>{p.name}</h3>
+                    <div className="flex items-baseline gap-1 mb-8">
+                      <span className="text-4xl sm:text-5xl font-extrabold tracking-tight" style={{color: p.textColor || 'var(--text-primary)'}}>{p.price}</span>
+                      <span className="text-sm font-bold opacity-60" style={{color: p.textColor || 'var(--text-primary)'}}>ETB {p.unit}</span>
+                    </div>
+                    
+                    <ul className="space-y-4 mb-10 flex-1">
+                      {features.map((f: any, i: number) => {
+                        const isLightText = p.textColor && p.textColor.toLowerCase() !== '#111827' && p.textColor.toLowerCase() !== 'black' && p.textColor.toLowerCase() !== 'var(--text-primary)'
+                        const colorProps = isLightText 
+                          ? { color: f.inc ? p.textColor : 'rgba(255,255,255,0.4)' }
+                          : { color: f.inc ? 'var(--text-primary)' : 'var(--text-muted)' }
+                          
+                        return (
+                          <li key={i} className="flex items-start gap-3 text-sm font-medium leading-tight" style={colorProps}>
+                            {f.inc ? (
+                              <CheckCircle size={18} className="shrink-0 mt-0.5" style={{color: p.popular && !isLightText ? 'var(--accent)' : (isLightText ? p.textColor : 'var(--primary)')}} />
+                            ) : (
+                              <X size={18} className="shrink-0 mt-0.5 opacity-50" />
+                            )}
+                            <span className={!f.inc ? 'line-through opacity-70' : ''}>{f.f}</span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                    
+                    <Link href={`/booking?package=${p.id}`} className={`w-full justify-center py-4 rounded-xl font-bold text-center transition-all group flex items-center gap-2 ${p.popular ? 'bg-white text-primary hover:bg-warm-50 shadow-lg' : 'bg-primary text-white hover:bg-primary-dark shadow-primary'}`}>
+                      Select Package <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </div>
-                  <ul className="space-y-3 mb-8 flex-1">
-                    {p.features.map(f => (
-                      <li key={f.f} className="flex items-center gap-2.5 text-sm" style={{color: p.textColor ? (f.inc ? p.textColor : 'rgba(255,255,255,0.4)') : (f.inc ? '#374151' : '#d1d5db')}}>
-                        {f.inc ? <CheckCircle size={15} className="shrink-0" /> : <X size={15} className="shrink-0" />}
-                        {f.f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href="/booking" className={p.popular ? 'btn-white w-full justify-center' : (p.color === 'white' ? 'btn-primary w-full justify-center' : 'btn-white w-full justify-center')}>
-                    Get Started
-                  </Link>
                 </div>
+              )
+            }) : (
+              <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-20 bg-surface rounded-3xl border border-dashed border-border shadow-sm">
+                <ShieldCheck size={64} className="mx-auto text-warm-300 mb-6" />
+                <h3 className="text-2xl font-bold text-text-primary mb-3 font-heading">No packages available</h3>
+                <p className="text-text-secondary text-lg">We are currently updating our pricing. Please contact us directly for a quote.</p>
+                <Link href="/contact" className="btn-primary mt-8">Contact Us</Link>
               </div>
-            ))}
+            )}
           </div>
-          <div className="mt-12 card p-8 text-center max-w-2xl mx-auto">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Need a Custom Package?</h3>
-            <p className="text-gray-500 mb-6">Have unique requirements? We'll build a custom IT support plan specifically for your business.</p>
-            <Link href="/contact" className="btn-primary">Talk to Us</Link>
+          
+          <div className="mt-20 card p-10 sm:p-16 text-center max-w-4xl mx-auto bg-white shadow-xl relative overflow-hidden border-0">
+            {/* Decorative background element */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-50 rounded-full filter blur-[60px] opacity-80 -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div className="relative z-10">
+              <span className="overline justify-center">Enterprise Solutions</span>
+              <h3 className="text-3xl font-bold text-text-primary mb-4 font-heading">Need a Custom Package?</h3>
+              <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto font-medium leading-relaxed">Have unique requirements, multiple locations, or need specialized enterprise IT support? We'll build a custom IT support plan specifically for your business.</p>
+              <Link href="/contact" className="btn-primary shadow-primary-lg text-lg px-8 py-4">Talk to an Expert</Link>
+            </div>
           </div>
         </div>
       </section>

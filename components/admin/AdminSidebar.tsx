@@ -2,12 +2,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, CalendarCheck, Wrench, FileText, MessageSquare, Star, Settings, LogOut, Zap, ChevronRight, PanelLeftClose, PanelLeft } from 'lucide-react'
+import { LayoutDashboard, CalendarCheck, Wrench, FileText, MessageSquare, Star, Settings, LogOut, Zap, ChevronRight, PanelLeftClose, PanelLeft, Package } from 'lucide-react'
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/bookings', label: 'Bookings', icon: CalendarCheck },
   { href: '/admin/services', label: 'Services', icon: Wrench },
+  { href: '/admin/packages', label: 'Packages', icon: Package },
   { href: '/admin/blog', label: 'Blog Posts', icon: FileText },
   { href: '/admin/contacts', label: 'Messages', icon: MessageSquare },
   { href: '/admin/testimonials', label: 'Testimonials', icon: Star },

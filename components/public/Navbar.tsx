@@ -1,6 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, X, Phone, Zap } from 'lucide-react'
 
 interface NavbarProps {
@@ -9,6 +10,30 @@ interface NavbarProps {
 
 export default function Navbar({ settings }: NavbarProps) {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => { document.body.style.overflow = 'unset' }
+  }, [open])
+
   const links = [
     { href: '/', label: 'Home' },
     { href: '/services', label: 'Services' },
@@ -22,46 +47,85 @@ export default function Navbar({ settings }: NavbarProps) {
   const logo = settings.logo
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+    <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl" style={{color:'#b31942'}}>
+        <div className="flex items-center justify-between h-20">
+          <Link href="/" className="flex items-center gap-2 font-bold text-2xl" style={{color: 'var(--primary)', fontFamily: 'var(--font-heading)'}}>
             {logo ? (
-              <img src={logo} alt={siteName} style={{height:'32px', width:'auto', objectFit:'contain'}} />
+              <img src={logo} alt={siteName} style={{height:'36px', width:'auto', objectFit:'contain'}} />
             ) : (
-              <Zap size={22} fill="#b31942" />
+              <div className="icon-box-sm text-white bg-primary shadow-sm" style={{background: 'var(--primary)', color: 'white'}}>
+                <Zap size={20} fill="currentColor" />
+              </div>
             )}
             {siteName}
           </Link>
-          <nav className="hidden md:flex items-center gap-1">
-            {links.map(l => (
-              <Link key={l.href} href={l.href} className="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-red-700 hover:bg-red-50 transition-colors">
-                {l.label}
-              </Link>
-            ))}
+          
+          <nav className="hidden md:flex items-center gap-2">
+            {links.map(l => {
+              const isActive = pathname === l.href || (l.href !== '/' && pathname.startsWith(l.href))
+              return (
+                <Link key={l.href} href={l.href} className={`nav-link ${isActive ? 'active' : ''}`}>
+                  {l.label}
+                </Link>
+              )
+            })}
           </nav>
-          <div className="hidden md:flex items-center gap-3">
-            <a href={`tel:${phoneDigits}`} className="flex items-center gap-2 text-sm text-gray-600 hover:text-red-700">
-              <Phone size={15} /> {phone}
+
+          <div className="hidden md:flex items-center gap-5">
+            <a href={`tel:${phoneDigits}`} className="flex items-center gap-2 text-sm font-semibold hover:text-primary transition-colors text-text-secondary" style={{color: 'var(--text-secondary)'}}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-primary-50 text-primary transition-transform hover:scale-110" style={{background: 'var(--primary-50)', color: 'var(--primary)'}}>
+                <Phone size={14} />
+              </div>
+              <span className="hover:text-primary transition-colors" style={{color: 'var(--primary)'}}>{phone}</span>
             </a>
-            <Link href="/booking" className="btn-primary text-sm py-2">Book Now</Link>
+            <Link href="/booking" className="btn-primary shadow-primary">
+              Book Now
+            </Link>
           </div>
-          <button className="md:hidden p-2 rounded-lg text-gray-600" onClick={() => setOpen(!open)}>
-            {open ? <X size={22} /> : <Menu size={22} />}
+
+          <button 
+            className="md:hidden p-2 rounded-lg text-text-secondary hover:bg-warm-100 transition-colors" 
+            style={{color: 'var(--text-secondary)'}}
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle Menu"
+            aria-expanded={open}
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-        {open && (
-          <div className="md:hidden py-4 border-t border-gray-100 space-y-1">
-            {links.map(l => (
-              <Link key={l.href} href={l.href} className="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-700" onClick={() => setOpen(false)}>
-                {l.label}
+
+        {/* Mobile Menu */}
+        <div className={`md:hidden mobile-menu ${open ? 'open' : ''}`}>
+          <div className="py-4 border-t border-border-light space-y-2 flex flex-col" style={{borderColor: 'var(--border-light)'}}>
+            {links.map(l => {
+              const isActive = pathname === l.href || (l.href !== '/' && pathname.startsWith(l.href))
+              return (
+                <Link 
+                  key={l.href} 
+                  href={l.href} 
+                  className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${isActive ? 'bg-primary-50 text-primary' : 'text-text-primary hover:bg-warm-50'}`}
+                  style={isActive ? {background: 'var(--primary-50)', color: 'var(--primary)'} : {color: 'var(--text-primary)'}}
+                  onClick={() => setOpen(false)}
+                >
+                  {l.label}
+                </Link>
+              )
+            })}
+            
+            <div className="pt-4 pb-2 px-4 border-t border-border-light mt-2" style={{borderColor: 'var(--border-light)'}}>
+               <a href={`tel:${phoneDigits}`} className="flex items-center gap-3 text-base font-medium mb-4 text-text-primary" style={{color: 'var(--text-primary)'}}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-50 text-primary" style={{background: 'var(--primary-50)', color: 'var(--primary)'}}>
+                  <Phone size={18} />
+                </div>
+                Call: {phone}
+              </a>
+              <Link href="/booking" className="btn-primary w-full justify-center text-base py-3 shadow-primary" onClick={() => setOpen(false)}>
+                Book Now
               </Link>
-            ))}
-            <div className="pt-2 px-4">
-              <Link href="/booking" className="btn-primary w-full justify-center" onClick={() => setOpen(false)}>Book Now</Link>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </header>
   )
