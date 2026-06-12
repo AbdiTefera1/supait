@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Zap, Phone, Mail, MapPin, Facebook, Send, MessageCircle, ArrowUp } from 'lucide-react'
 
@@ -7,6 +8,20 @@ interface FooterProps {
 }
 
 export default function Footer({ settings }: FooterProps) {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 300) {
+        setIsVisible(true)
+      } else {
+        setIsVisible(false)
+      }
+    }
+    window.addEventListener('scroll', toggleVisibility)
+    return () => window.removeEventListener('scroll', toggleVisibility)
+  }, [])
+
   const siteName = settings.site_name || 'Supa IT'
   const tagline = settings.site_tagline || 'Your trusted local IT partner for homes and businesses. Fast, reliable, affordable.'
   const phone = settings.phone || '+251 911 234 567'
@@ -116,12 +131,21 @@ export default function Footer({ settings }: FooterProps) {
             <Link href="/admin" className="text-xs font-medium text-warm-500 hover:text-white transition-colors" style={{color: 'var(--warm-500)'}}>
               Admin Portal
             </Link>
-            <button onClick={scrollToTop} className="back-to-top" aria-label="Back to top" title="Back to top">
-              <ArrowUp size={16} />
-            </button>
           </div>
         </div>
       </div>
+
+      {isVisible && (
+        <button 
+          onClick={scrollToTop} 
+          className="fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center shadow-2xl transition-transform hover:scale-110 z-[100] animate-fade-up" 
+          style={{ backgroundColor: 'var(--primary, #b31942)', color: 'white' }}
+          aria-label="Back to top" 
+          title="Back to top"
+        >
+          <ArrowUp size={24} />
+        </button>
+      )}
     </footer>
   )
 }

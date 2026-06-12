@@ -64,7 +64,11 @@ export default async function PackagesPage() {
                       })}
                     </ul>
                     
-                    <Link href={`/booking?package=${p.id}`} className={`w-full justify-center py-4 rounded-xl font-bold text-center transition-all group flex items-center gap-2 ${p.popular ? 'bg-white text-primary hover:bg-warm-50 shadow-lg' : 'bg-primary text-white hover:bg-primary-dark shadow-primary'}`}>
+                    <Link 
+                      href={`/booking?package=${p.id}`} 
+                      className="w-full flex justify-center py-4 rounded-xl font-bold text-center transition-all group items-center gap-2 shadow-lg hover:scale-[1.02]"
+                      style={p.popular ? { backgroundColor: 'white', color: 'var(--primary, #b31942)' } : { backgroundColor: 'var(--primary, #b31942)', color: 'white' }}
+                    >
                       Select Package <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>

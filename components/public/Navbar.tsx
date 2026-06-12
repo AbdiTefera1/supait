@@ -120,7 +120,12 @@ export default function Navbar({ settings }: NavbarProps) {
                 </div>
                 Call: {phone}
               </a>
-              <Link href="/booking" className="btn-primary w-full justify-center text-base py-3 shadow-primary" onClick={() => setOpen(false)}>
+              <Link 
+                href="/booking" 
+                className="w-full flex justify-center py-3 rounded-lg font-bold transition-colors" 
+                style={{ backgroundColor: 'var(--primary, #b31942)', color: 'white' }}
+                onClick={() => setOpen(false)}
+              >
                 Book Now
               </Link>
             </div>
