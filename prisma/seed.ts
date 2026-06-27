@@ -51,7 +51,7 @@ async function main() {
 
   // Testimonials
   const testimonials = [
-    { name: 'Abebe Girma', role: 'Restaurant Owner', content: 'TechServe Pro set up our entire network and POS system in one day. Incredible service, very professional and affordable. Highly recommend!', rating: 5, order: 1 },
+    { name: 'Abebe Girma', role: 'Restaurant Owner', content: 'SupaIT set up our entire network and POS system in one day. Incredible service, very professional and affordable. Highly recommend!', rating: 5, order: 1 },
     { name: 'Sara Tekle', role: 'Home User', content: 'My computer had a bad virus and I thought I lost everything. They recovered all my files and cleaned the whole system. Amazing work!', rating: 5, order: 2 },
     { name: 'Dr. Michael Haile', role: 'Clinic Director', content: 'We now have a monthly IT support contract. Our systems never go down anymore and staff training was excellent. Worth every birr.', rating: 5, order: 3 },
     { name: 'Tigist Alemu', role: 'Boutique Owner', content: 'They built our website and Google Business Profile. We are getting new customers every week from online searches now!', rating: 5, order: 4 },
@@ -77,45 +77,45 @@ async function main() {
     {
       name: 'Home User', price: '800', unit: 'one-time visit', color: 'white',
       features: [
-        {f:'OS & driver updates', inc:true}, {f:'Virus scan & removal', inc:true}, {f:'Speed optimization', inc:true},
-        {f:'Printer setup', inc:true}, {f:'Wi-Fi configuration', inc:true}, {f:'30-day follow-up call', inc:true},
-        {f:'Monthly visits', inc:false}, {f:'Remote support', inc:false}, {f:'Data backup monitoring', inc:false},
+        { f: 'OS & driver updates', inc: true }, { f: 'Virus scan & removal', inc: true }, { f: 'Speed optimization', inc: true },
+        { f: 'Printer setup', inc: true }, { f: 'Wi-Fi configuration', inc: true }, { f: '30-day follow-up call', inc: true },
+        { f: 'Monthly visits', inc: false }, { f: 'Remote support', inc: false }, { f: 'Data backup monitoring', inc: false },
       ],
       order: 1
     },
     {
       name: 'Family Security', price: '1,500', unit: 'setup + 400/mo', color: 'white', popular: false,
       features: [
-        {f:'Parental controls (all devices)', inc:true}, {f:'Website blocking & time limits', inc:true}, {f:'Antivirus on all PCs', inc:true},
-        {f:'Automated backup setup', inc:true}, {f:'Monthly check-in call', inc:true}, {f:'WhatsApp support', inc:true},
-        {f:'On-site visits', inc:false}, {f:'Employee management', inc:false}, {f:'Priority support', inc:false},
+        { f: 'Parental controls (all devices)', inc: true }, { f: 'Website blocking & time limits', inc: true }, { f: 'Antivirus on all PCs', inc: true },
+        { f: 'Automated backup setup', inc: true }, { f: 'Monthly check-in call', inc: true }, { f: 'WhatsApp support', inc: true },
+        { f: 'On-site visits', inc: false }, { f: 'Employee management', inc: false }, { f: 'Priority support', inc: false },
       ],
       order: 2
     },
     {
       name: 'Small Business IT', price: '1,500', unit: '/month', color: '#b31942', textColor: 'white', popular: true,
       features: [
-        {f:'Full network setup', inc:true}, {f:'Employee access management', inc:true}, {f:'2 on-site visits/month', inc:true},
-        {f:'Remote support (WhatsApp)', inc:true}, {f:'Monthly security updates', inc:true}, {f:'Data backup monitoring', inc:true},
-        {f:'Priority 24hr response', inc:true}, {f:'Staff training (basic)', inc:true}, {f:'Google Business Profile', inc:false},
+        { f: 'Full network setup', inc: true }, { f: 'Employee access management', inc: true }, { f: '2 on-site visits/month', inc: true },
+        { f: 'Remote support (WhatsApp)', inc: true }, { f: 'Monthly security updates', inc: true }, { f: 'Data backup monitoring', inc: true },
+        { f: 'Priority 24hr response', inc: true }, { f: 'Staff training (basic)', inc: true }, { f: 'Google Business Profile', inc: false },
       ],
       order: 3
     },
     {
       name: 'Website + Maintenance', price: '8,000', unit: 'build + 800/mo', color: 'white',
       features: [
-        {f:'5-page professional website', inc:true}, {f:'Mobile-responsive design', inc:true}, {f:'Google Business Profile', inc:true},
-        {f:'Business email setup', inc:true}, {f:'Monthly content update', inc:true}, {f:'Basic SEO optimization', inc:true},
-        {f:'On-site IT support', inc:false}, {f:'Network management', inc:false}, {f:'Staff training', inc:false},
+        { f: '5-page professional website', inc: true }, { f: 'Mobile-responsive design', inc: true }, { f: 'Google Business Profile', inc: true },
+        { f: 'Business email setup', inc: true }, { f: 'Monthly content update', inc: true }, { f: 'Basic SEO optimization', inc: true },
+        { f: 'On-site IT support', inc: false }, { f: 'Network management', inc: false }, { f: 'Staff training', inc: false },
       ],
       order: 4
     },
     {
       name: 'Business Pro', price: '3,000', unit: '/month', color: '#1f2937', textColor: 'white',
       features: [
-        {f:'Full network infrastructure', inc:true}, {f:'Website + Google presence', inc:true}, {f:'Business email (all staff)', inc:true},
-        {f:'Staff computer training', inc:true}, {f:'Security & backup system', inc:true}, {f:'4 on-site visits/month', inc:true},
-        {f:'Priority 4hr response', inc:true}, {f:'Monthly IT report', inc:true}, {f:'Dedicated IT manager', inc:true},
+        { f: 'Full network infrastructure', inc: true }, { f: 'Website + Google presence', inc: true }, { f: 'Business email (all staff)', inc: true },
+        { f: 'Staff computer training', inc: true }, { f: 'Security & backup system', inc: true }, { f: '4 on-site visits/month', inc: true },
+        { f: 'Priority 4hr response', inc: true }, { f: 'Monthly IT report', inc: true }, { f: 'Dedicated IT manager', inc: true },
       ],
       order: 5
     },

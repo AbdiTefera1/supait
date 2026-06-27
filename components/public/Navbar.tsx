@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -15,23 +16,18 @@ export default function Navbar({ settings }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
+      setScrolled(window.scrollY > 20)
     }
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden'
-    } else {
+    document.body.style.overflow = open ? 'hidden' : 'unset'
+    return () => {
       document.body.style.overflow = 'unset'
     }
-    return () => { document.body.style.overflow = 'unset' }
   }, [open])
 
   const links = [
@@ -41,52 +37,112 @@ export default function Navbar({ settings }: NavbarProps) {
     { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },
   ]
+
   const siteName = settings.site_name || 'Supa IT'
-  const phone = settings.phone || '+251 911 234 567'
-  const phoneDigits = phone.replace(/[\s\-()]/g, '')
+  const phone = settings.phone || '+251 940 050 709 / +251 714 088 343'
+  const phoneNumbers = phone.split('/').map((ph) => ph.trim())
   const logo = settings.logo
 
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-2 font-bold text-2xl" style={{color: 'var(--primary)', fontFamily: 'var(--font-heading)'}}>
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 font-bold text-2xl"
+            style={{
+              color: 'var(--primary)',
+              fontFamily: 'var(--font-heading)',
+            }}
+          >
             {logo ? (
-              <img src={logo} alt={siteName} style={{height:'36px', width:'auto', objectFit:'contain'}} />
+              <img
+                src={logo}
+                alt={siteName}
+                className="h-9 w-auto object-contain"
+              />
             ) : (
-              <div className="icon-box-sm text-white bg-primary shadow-sm" style={{background: 'var(--primary)', color: 'white'}}>
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                style={{
+                  background: 'var(--primary)',
+                  color: '#fff',
+                }}
+              >
                 <Zap size={20} fill="currentColor" />
               </div>
             )}
-            {siteName}
+
+            <span>{siteName}</span>
           </Link>
-          
+
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-2">
-            {links.map(l => {
-              const isActive = pathname === l.href || (l.href !== '/' && pathname.startsWith(l.href))
+            {links.map((link) => {
+              const isActive =
+                pathname === link.href ||
+                (link.href !== '/' && pathname.startsWith(link.href))
+
               return (
-                <Link key={l.href} href={l.href} className={`nav-link ${isActive ? 'active' : ''}`}>
-                  {l.label}
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`nav-link ${isActive ? 'active' : ''}`}
+                >
+                  {link.label}
                 </Link>
               )
             })}
           </nav>
 
-          <div className="hidden md:flex items-center gap-5">
-            <a href={`tel:${phoneDigits}`} className="flex items-center gap-2 text-sm font-semibold hover:text-primary transition-colors text-text-secondary" style={{color: 'var(--text-secondary)'}}>
-              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-primary-50 text-primary transition-transform hover:scale-110" style={{background: 'var(--primary-50)', color: 'var(--primary)'}}>
-                <Phone size={14} />
+          {/* Desktop Right Side */}
+          <div className="hidden md:flex items-center gap-8">
+            <div className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                style={{
+                  background: 'var(--primary-50)',
+                  color: 'var(--primary)',
+                }}
+              >
+                <Phone size={18} />
               </div>
-              <span className="hover:text-primary transition-colors" style={{color: 'var(--primary)'}}>{phone}</span>
-            </a>
+
+              <div className="flex flex-col leading-tight">
+                <span className="text-xs uppercase tracking-wide text-gray-500">
+                  Call Us
+                </span>
+
+                <div className="flex items-center flex-wrap">
+                  {phoneNumbers.map((number, index) => (
+                    <span key={number} className="flex items-center">
+                      <a
+                        href={`tel:${number.replace(/[\s\-()]/g, '')}`}
+                        className="font-medium hover:text-primary transition-colors"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {number}
+                      </a>
+
+                      {index < phoneNumbers.length - 1 && (
+                        <span className="mx-2 text-gray-400">|</span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <Link href="/booking" className="btn-primary shadow-primary">
               Book Now
             </Link>
           </div>
 
-          <button 
-            className="md:hidden p-2 rounded-lg text-text-secondary hover:bg-warm-100 transition-colors" 
-            style={{color: 'var(--text-secondary)'}}
+          {/* Mobile Toggle */}
+          <button
+            className="md:hidden p-2 rounded-lg transition-colors"
+            style={{ color: 'var(--text-secondary)' }}
             onClick={() => setOpen(!open)}
             aria-label="Toggle Menu"
             aria-expanded={open}
@@ -97,34 +153,80 @@ export default function Navbar({ settings }: NavbarProps) {
 
         {/* Mobile Menu */}
         <div className={`md:hidden mobile-menu ${open ? 'open' : ''}`}>
-          <div className="py-4 border-t border-border-light space-y-2 flex flex-col" style={{borderColor: 'var(--border-light)'}}>
-            {links.map(l => {
-              const isActive = pathname === l.href || (l.href !== '/' && pathname.startsWith(l.href))
+          <div
+            className="py-4 border-t space-y-2"
+            style={{ borderColor: 'var(--border-light)' }}
+          >
+            {links.map((link) => {
+              const isActive =
+                pathname === link.href ||
+                (link.href !== '/' && pathname.startsWith(link.href))
+
               return (
-                <Link 
-                  key={l.href} 
-                  href={l.href} 
-                  className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${isActive ? 'bg-primary-50 text-primary' : 'text-text-primary hover:bg-warm-50'}`}
-                  style={isActive ? {background: 'var(--primary-50)', color: 'var(--primary)'} : {color: 'var(--text-primary)'}}
+                <Link
+                  key={link.href}
+                  href={link.href}
                   onClick={() => setOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${isActive
+                    ? 'bg-primary-50 text-primary'
+                    : 'hover:bg-gray-100'
+                    }`}
+                  style={
+                    isActive
+                      ? {
+                        background: 'var(--primary-50)',
+                        color: 'var(--primary)',
+                      }
+                      : {
+                        color: 'var(--text-primary)',
+                      }
+                  }
                 >
-                  {l.label}
+                  {link.label}
                 </Link>
               )
             })}
-            
-            <div className="pt-4 pb-2 px-4 border-t border-border-light mt-2" style={{borderColor: 'var(--border-light)'}}>
-               <a href={`tel:${phoneDigits}`} className="flex items-center gap-3 text-base font-medium mb-4 text-text-primary" style={{color: 'var(--text-primary)'}}>
-                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-50 text-primary" style={{background: 'var(--primary-50)', color: 'var(--primary)'}}>
+
+            {/* Mobile Contact */}
+            <div
+              className="mt-4 pt-4 px-4 border-t"
+              style={{ borderColor: 'var(--border-light)' }}
+            >
+              <div className="flex items-start gap-3 mb-5">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                  style={{
+                    background: 'var(--primary-50)',
+                    color: 'var(--primary)',
+                  }}
+                >
                   <Phone size={18} />
                 </div>
-                Call: {phone}
-              </a>
-              <Link 
-                href="/booking" 
-                className="w-full flex justify-center py-3 rounded-lg font-bold transition-colors" 
-                style={{ backgroundColor: 'var(--primary, #b31942)', color: 'white' }}
+
+                <div className="flex flex-col">
+                  <span className="font-semibold mb-2">Call Us</span>
+
+                  {phoneNumbers.map((number) => (
+                    <a
+                      key={number}
+                      href={`tel:${number.replace(/[\s\-()]/g, '')}`}
+                      className="hover:text-primary transition-colors"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      {number}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <Link
+                href="/booking"
                 onClick={() => setOpen(false)}
+                className="w-full flex justify-center items-center py-3 rounded-lg font-bold"
+                style={{
+                  background: 'var(--primary)',
+                  color: '#fff',
+                }}
               >
                 Book Now
               </Link>
