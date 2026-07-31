@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'sw
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-heading', display: 'swap' })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://supait.vercel.app/'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://supait.vercel.app'),
   title: {
     template: '%s | SupaIT',
     default: 'SupaIT | Tech Support & IT Services in Ethiopia',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'SupaIT | Local Tech Experts in Ethiopia',
     description: 'Expert IT support for homes and businesses in Addis Ababa. Software fixes, hardware repair, and complete IT solutions.',
-    url: 'https://supait.vercel.app/',
+    url: 'https://supait.vercel.app',
     siteName: 'SupaIT',
     locale: 'en_ET',
     type: 'website',
