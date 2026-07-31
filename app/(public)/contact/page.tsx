@@ -1,6 +1,13 @@
+import { Metadata } from 'next'
 import ContactForm from '@/components/public/ContactForm'
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from 'lucide-react'
 import { fetchSettings } from '@/lib/fetchSettings'
+
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description: 'Get in touch with SupaIT for fast computer repair, software fixes, and IT support in Addis Ababa, Ethiopia. We respond within minutes.',
+  alternates: { canonical: 'https://www.supait.com/contact' },
+}
 
 export default async function ContactPage() {
   const settings = await fetchSettings()

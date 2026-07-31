@@ -1,7 +1,14 @@
+import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import ServiceIcon from '@/components/public/ServiceIcon'
 import Link from 'next/link'
 import { ArrowRight, Clock, ShieldCheck } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'IT Services & Software Repair',
+  description: 'Professional IT services in Ethiopia. We offer computer repair, data recovery, network setup, virus removal, and software problem solving for businesses and homes.',
+  alternates: { canonical: 'https://www.supait.com/services' },
+}
 
 // Allow filtering via URL query param: ?category=Security
 export default async function ServicesPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
@@ -14,8 +21,41 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
   const allServices = await prisma.service.findMany({ where: { active: true }, select: { category: true } })
   const uniqueCategories = ['All', ...Array.from(new Set(allServices.map(s => s.category)))]
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'IT Support & Computer Repair',
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'SupaIT',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Addis Ababa',
+        addressCountry: 'ET'
+      }
+    },
+    areaServed: {
+      '@type': 'City',
+      name: 'Addis Ababa'
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'IT Services',
+      itemListElement: services.map((s, index) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: s.title,
+          description: s.description
+        },
+        position: index + 1
+      }))
+    }
+  }
+
   return (
     <div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="hero-gradient text-white py-24 px-4 text-center">
         <div className="max-w-4xl mx-auto animate-fade-up">
           <span className="inline-block py-1 px-3 rounded-full bg-white/10 text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-md border border-white/20 shadow-lg">What We Do</span>

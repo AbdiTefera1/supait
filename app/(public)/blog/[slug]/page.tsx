@@ -1,8 +1,28 @@
+import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Calendar, Tag, ArrowLeft, User, Clock, Share2 } from 'lucide-react'
 import { format } from 'date-fns'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const slug = (await params).slug
+  const post = await prisma.blogPost.findUnique({ where: { slug } })
+  if (!post) return { title: 'Post Not Found' }
+  
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: { canonical: `https://www.supait.com/blog/${slug}` },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.createdAt.toISOString(),
+      authors: [post.author],
+    }
+  }
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug
@@ -18,8 +38,30 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const wordCount = post.content.split(/\s+/).length
   const readTime = Math.max(1, Math.ceil(wordCount / 200))
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    author: {
+      '@type': 'Person',
+      name: post.author
+    },
+    datePublished: post.createdAt.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
+    publisher: {
+      '@type': 'Organization',
+      name: 'SupaIT',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.supait.com/images/logo.png'
+      }
+    }
+  }
+
   return (
     <div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <article className="bg-surface pb-24">
         {/* Post Header / Hero */}
         <header className="hero-gradient text-white pt-24 pb-32 px-4 relative">

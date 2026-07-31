@@ -1,7 +1,14 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import ServiceIcon from '@/components/public/ServiceIcon'
 import { CheckCircle, ArrowRight, Star, Phone, MessageCircle, Zap , Shield, Clock, ThumbsUp, ChevronRight  } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Top-rated tech service in Ethiopia. We solve software problems, repair computers, and provide complete IT support in Addis Ababa.',
+  alternates: { canonical: 'https://www.supait.com' },
+}
 
 async function getData() {
   const [services, testimonials, settings, packages] = await Promise.all([
@@ -29,8 +36,42 @@ export default async function HomePage() {
     { icon: ThumbsUp, title: 'No Surprise Pricing', desc: 'We believe in 100% transparent pricing. You get a clear, upfront quote before any work begins, with zero hidden fees.' },
   ]
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'SupaIT',
+    image: 'https://www.supait.com/images/logo.png',
+    '@id': 'https://www.supait.com',
+    url: 'https://www.supait.com',
+    telephone: phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Addis Ababa',
+      addressLocality: 'Addis Ababa',
+      addressRegion: 'Addis Ababa',
+      postalCode: '1000',
+      addressCountry: 'ET'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 9.0300,
+      longitude: 38.7400
+    },
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+      ],
+      opens: '08:00',
+      closes: '20:00'
+    },
+    priceRange: '$$',
+    description: 'Expert IT support, computer repair, and software problem solving in Addis Ababa, Ethiopia.'
+  }
+
   return (
-    <>
+    <div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* HERO SECTION */}
       <section className="hero-gradient text-white" style={{minHeight:'90vh', display:'flex', alignItems:'center'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 w-full relative z-10">
@@ -302,6 +343,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

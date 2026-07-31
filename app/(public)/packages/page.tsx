@@ -1,6 +1,13 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { CheckCircle, X, Star, ArrowRight, ShieldCheck } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
+
+export const metadata: Metadata = {
+  title: 'IT Support Packages & Pricing',
+  description: 'Affordable and transparent IT support packages for homes and businesses in Ethiopia. Get monthly maintenance, priority support, and complete peace of mind.',
+  alternates: { canonical: 'https://www.supait.com/packages' },
+}
 
 export default async function PackagesPage() {
   const dbPackages = await prisma.package.findMany({
