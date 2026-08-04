@@ -1,8 +1,14 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://supait.vercel.app'
+  // Ensure no trailing slash on baseUrl
+  let baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://supait.vercel.app'
+  if (baseUrl.endsWith('/')) {
+    baseUrl = baseUrl.slice(0, -1)
+  }
   
   // Static Routes
   const staticRoutes: MetadataRoute.Sitemap = [
