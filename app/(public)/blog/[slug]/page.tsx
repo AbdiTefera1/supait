@@ -1,13 +1,21 @@
 import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
+import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Calendar, Tag, ArrowLeft, User, Clock, Share2 } from 'lucide-react'
 import { format } from 'date-fns'
 
+// React.cache deduplicates this call within a single request.
+// generateMetadata and BlogPostPage both call getPost(slug) but only
+// ONE database query is made per request.
+const getPost = cache(async (slug: string) => {
+  return prisma.blogPost.findUnique({ where: { slug } })
+})
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const slug = (await params).slug
-  const post = await prisma.blogPost.findUnique({ where: { slug } })
+  const post = await getPost(slug)
   if (!post) return { title: 'Post Not Found' }
   
   return {
@@ -26,9 +34,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug
-  const post = await prisma.blogPost.findUnique({
-    where: { slug }
-  })
+  const post = await getPost(slug)  // ← uses cached result, no extra DB query
+
 
   if (!post || !post.published) {
     notFound()

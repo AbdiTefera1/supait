@@ -9,7 +9,7 @@ export default async function BlogPage() {
     prisma.blogPost.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' } }),
     fetchSettings()
   ])
-  const siteName = settings.site_name || 'TechServe'
+  const siteName = settings.site_name || 'SupaIT'
 
   return (
     <div>

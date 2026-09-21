@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+//  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -33,6 +33,9 @@ model Booking {
   totalPrice  Float?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
 }
 
 model Service {
@@ -50,6 +53,10 @@ model Service {
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([active, order])
+  @@index([active, featured])
+  @@index([category, active])
 }
 
 model Page {
@@ -78,6 +85,8 @@ model Testimonial {
   active    Boolean  @default(true)
   order     Int      @default(0)
   createdAt DateTime @default(now())
+
+  @@index([active, order])
 }
 
 model BlogPost {
@@ -92,6 +101,8 @@ model BlogPost {
   author     String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  @@index([published, createdAt])
 }
 
 model Contact {
@@ -103,6 +114,9 @@ model Contact {
   message   String
   status    ContactStatus @default(NEW)
   createdAt DateTime      @default(now())
+
+  @@index([status])
+  @@index([createdAt])
 }
 
 model Package {
@@ -118,6 +132,8 @@ model Package {
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([active, order])
 }
 
 enum Role {
@@ -138,3 +154,4 @@ enum ContactStatus {
   READ
   REPLIED
 }
+

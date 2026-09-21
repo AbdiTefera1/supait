@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import { fetchSettings } from '@/lib/fetchSettings'
 import ServiceIcon from '@/components/public/ServiceIcon'
 import { CheckCircle, ArrowRight, Star, Phone, MessageCircle, Zap , Shield, Clock, ThumbsUp, ChevronRight  } from 'lucide-react'
 
@@ -11,15 +12,14 @@ export const metadata: Metadata = {
 }
 
 async function getData() {
+  // fetchSettings is deduplicated by React.cache — no extra DB hit vs the layout
   const [services, testimonials, settings, packages] = await Promise.all([
     prisma.service.findMany({ where: { active: true, featured: true }, orderBy: { order: 'asc' }, take: 6 }),
     prisma.testimonial.findMany({ where: { active: true }, orderBy: { order: 'asc' } }),
-    prisma.siteSettings.findMany(),
+    fetchSettings(),
     prisma.package.findMany({ where: { active: true, popular: true }, orderBy: { order: 'asc' }, take: 3 })
   ])
-  const s: Record<string, string> = {}
-  settings.forEach(x => { s[x.key] = x.value })
-  return { services, testimonials, settings: s, packages }
+  return { services, testimonials, settings, packages }
 }
 
 export default async function HomePage() {

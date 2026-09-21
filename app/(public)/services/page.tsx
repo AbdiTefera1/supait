@@ -11,15 +11,19 @@ export const metadata: Metadata = {
 }
 
 // Allow filtering via URL query param: ?category=Security
+// Uses searchParams so this page is dynamically rendered per request
+export const dynamic = 'force-dynamic'
+
 export default async function ServicesPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const category = (await searchParams).category
-  
-  const whereClause = { active: true, ...(category && category !== 'All' ? { category } : {}) }
-  const services = await prisma.service.findMany({ where: whereClause, orderBy: { order: 'asc' } })
-  
-  // Get unique categories from all active services
-  const allServices = await prisma.service.findMany({ where: { active: true }, select: { category: true } })
+
+  // Single query — fetch all active services, then derive categories and filtered list in-memory
+  const allServices = await prisma.service.findMany({ where: { active: true }, orderBy: { order: 'asc' } })
   const uniqueCategories = ['All', ...Array.from(new Set(allServices.map(s => s.category)))]
+  const services = category && category !== 'All'
+    ? allServices.filter(s => s.category === category)
+    : allServices
+
 
   const jsonLd = {
     '@context': 'https://schema.org',

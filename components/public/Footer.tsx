@@ -48,15 +48,12 @@ export default function Footer({ settings }: FooterProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 font-bold text-2xl mb-6" style={{ color: 'white', fontFamily: 'var(--font-heading)' }}>
-              {logo ? (
-                <img src={logo} alt={siteName} style={{ height: '36px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
-              ) : (
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'var(--primary)' }}>
-                  <Zap size={20} fill="currentColor" />
-                </div>
-              )}
-              {siteName}
+            <div className="mb-6">
+              <img
+                src={logo || '/supait-horizontal-dark.svg'}
+                alt={siteName}
+                style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
+              />
             </div>
             <p className="text-base text-warm-400 leading-relaxed mb-8 max-w-sm" style={{ color: 'var(--warm-400)' }}>{tagline}</p>
             <div className="flex gap-4">
