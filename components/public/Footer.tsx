@@ -23,7 +23,7 @@ export default function Footer({ settings }: FooterProps) {
   }, [])
 
   const siteName = settings.site_name || 'Supa IT'
-  const tagline = settings.site_tagline || 'Your trusted local IT partner for homes and businesses. Fast, reliable, affordable.'
+  const tagline = settings.site_tagline || 'Your trusted IT partner for small, medium, and large businesses. Reliable, scalable, and always available.'
   const phone = settings.phone || '+251 940 050 709 / +251 714 088 343'
   const phoneNumbers = phone.split('/').map((ph) => ph.trim())
   const email = settings.email || 'info@techservepro.com'

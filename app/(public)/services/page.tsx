@@ -6,7 +6,7 @@ import { ArrowRight, Clock, ShieldCheck } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'IT Services & Software Repair',
-  description: 'Professional IT services in Ethiopia. We offer computer repair, data recovery, network setup, virus removal, and software problem solving for businesses and homes.',
+  description: 'Professional IT services in Ethiopia. We offer computer repair, data recovery, network setup, virus removal, and software problem solving for small, medium, and enterprise businesses.',
   alternates: { canonical: 'https://www.supait.com/services' },
 }
 
@@ -59,8 +59,8 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
       <section className="hero-gradient text-white py-24 px-4 text-center">
         <div className="max-w-4xl mx-auto animate-fade-up">
           <span className="inline-block py-1 px-3 rounded-full bg-white/10 text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-md border border-white/20 shadow-lg">What We Do</span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 font-heading">Our IT Services</h1>
-          <p className="text-primary-100 text-lg sm:text-xl max-w-2xl mx-auto font-medium">Complete IT solutions for homes and businesses. From emergency repairs to ongoing monthly support — we handle it all.</p>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 font-heading">Corporate IT Services</h1>
+          <p className="text-primary-100 text-lg sm:text-xl max-w-2xl mx-auto font-medium">Complete IT solutions for small, medium, and large businesses. From emergency incident response to ongoing enterprise support — we handle it all.</p>
         </div>
       </section>
 

@@ -17,7 +17,7 @@ export default async function BlogPage() {
         <div className="max-w-4xl mx-auto animate-fade-up">
           <span className="inline-block py-1 px-3 rounded-full bg-white/10 text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-md border border-white/20 shadow-lg">Our Blog</span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 font-heading">IT Tips & News</h1>
-          <p className="text-primary-100 text-lg sm:text-xl max-w-2xl mx-auto font-medium">Free advice, how-to guides, and technology news to keep your home and business running smoothly.</p>
+          <p className="text-primary-100 text-lg sm:text-xl max-w-2xl mx-auto font-medium">Insights, guides, and tech news to help your business stay secure, efficient, and competitive in the digital age.</p>
         </div>
       </section>
 

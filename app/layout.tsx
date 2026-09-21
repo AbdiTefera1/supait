@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s | SupaIT',
     default: 'SupaIT | Tech Support & IT Services in Ethiopia',
   },
-  description: 'Fast, reliable, and affordable IT services in Addis Ababa, Ethiopia. Expert solutions for software problems, computer repair, network setup, virus removal, and web development.',
+  description: 'Fast, reliable, and scalable IT services for businesses in Addis Ababa, Ethiopia. Expert solutions for software problems, infrastructure management, network setup, cybersecurity, and web development.',
   keywords: ['IT services Ethiopia', 'tech support Addis Ababa', 'software problem fix Ethiopia', 'computer repair Addis Ababa', 'network setup', 'SupaIT', 'Ethiopian tech support'],
   authors: [{ name: 'SupaIT Team' }],
   creator: 'SupaIT',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'SupaIT | Local Tech Experts in Ethiopia',
-    description: 'Expert IT support for homes and businesses in Addis Ababa. Software fixes, hardware repair, and complete IT solutions.',
-    url: 'https://supait.vercel.app',
+    description: 'Expert IT support for businesses in Addis Ababa. Software fixes, hardware repair, and complete enterprise IT solutions.',
+    url: 'https://www.supait.com',
     siteName: 'SupaIT',
     locale: 'en_ET',
     type: 'website',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'SupaIT | Tech Support in Ethiopia',
-    description: 'Expert IT support for homes and businesses in Addis Ababa.',
+    description: 'Expert IT support for businesses and enterprises in Addis Ababa.',
   },
   robots: {
     index: true,

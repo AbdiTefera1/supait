@@ -30,10 +30,10 @@ export default async function HomePage() {
   const whatsappNum = whatsapp.replace(/[^0-9]/g, '')
 
   const whyUs = [
-    { icon: Zap, title: 'Lightning Fast Response', desc: 'When your business is down, every minute counts. We respond to emergency calls within 15 minutes and resolve most issues the same day.' },
-    { icon: Shield, title: 'Secure & Trustworthy', desc: 'Your data privacy is our top priority. We use enterprise-grade encryption and strict privacy protocols for every single client.' },
-    { icon: Clock, title: 'Door-to-Door Service', desc: 'Don\'t unplug your entire setup. Our technicians come directly to your home or office fully equipped to solve the problem.' },
-    { icon: ThumbsUp, title: 'No Surprise Pricing', desc: 'We believe in 100% transparent pricing. You get a clear, upfront quote before any work begins, with zero hidden fees.' },
+    { icon: Zap, title: 'Lightning Fast Response', desc: 'When your business is down, every minute counts. We respond to critical incidents within 15 minutes and resolve most issues the same business day.' },
+    { icon: Shield, title: 'Enterprise-Grade Security', desc: 'Your business data is our top priority. We implement enterprise-grade encryption, access controls, and strict security protocols for every client.' },
+    { icon: Clock, title: 'Scalable IT Solutions', desc: 'Whether you are a 5-person startup or a 500-person enterprise, our flexible service model grows with your business needs — no lock-in contracts.' },
+    { icon: ThumbsUp, title: 'Transparent Pricing', desc: 'We believe in 100% transparent pricing. You receive a clear, upfront quote before any work begins, with zero hidden fees or surprise charges.' },
   ]
 
   const jsonLd = {
@@ -81,13 +81,13 @@ export default async function HomePage() {
             <div className="animate-fade-up">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-8 glass shadow-lg">
                 <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse-glow" style={{boxShadow: '0 0 10px rgba(74, 222, 128, 0.6)'}}></span>
-                Technicians available now in Addis Ababa
+                Serving businesses across Addis Ababa
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.1] mb-6">
-                {settings.hero_title || 'Your Local IT Expert'}
+                {settings.hero_title || 'Your Business IT Partner'}
               </h1>
               <p className="text-lg sm:text-xl text-primary-100 leading-relaxed mb-10 max-w-lg font-medium opacity-90">
-                {settings.hero_subtitle || 'Fast, reliable, and affordable IT services for homes and businesses. We come to you!'}
+                {settings.hero_subtitle || 'Reliable IT support for small, medium, and large businesses. From rapid incident response to full infrastructure management — we keep your business running.'}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -158,9 +158,9 @@ export default async function HomePage() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="section-heading">
-            <span className="overline">The TechServe Advantage</span>
-            <h2 className="text-3xl md:text-4xl font-bold">Why Choose Us?</h2>
-            <p className="mt-4 text-lg">We're not just any IT service — we're your dedicated local tech partner who shows up, gets it done, and keeps you protected.</p>
+            <span className="overline">The SupaIT Advantage</span>
+            <h2 className="text-3xl md:text-4xl font-bold">Why Businesses Choose Us?</h2>
+            <p className="mt-4 text-lg">We're not just any IT provider — we're your dedicated technology partner, built to scale with your business and keep your operations running without interruption.</p>
           </div>
           
           <div className="bento-grid">

@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
   title: 'IT Support Packages & Pricing',
-  description: 'Affordable and transparent IT support packages for homes and businesses in Ethiopia. Get monthly maintenance, priority support, and complete peace of mind.',
+  description: 'Flexible IT service packages for small, medium, and large businesses in Ethiopia. Get scalable monthly support, priority incident response, and enterprise IT management.',
   alternates: { canonical: 'https://www.supait.com/packages' },
 }
 
@@ -21,7 +21,7 @@ export default async function PackagesPage() {
         <div className="max-w-4xl mx-auto animate-fade-up">
           <span className="inline-block py-1 px-3 rounded-full bg-white/10 text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-md border border-white/20 shadow-lg">Pricing Plans</span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 font-heading">Service Packages</h1>
-          <p className="text-primary-100 text-lg sm:text-xl max-w-2xl mx-auto font-medium">Choose the right plan for your home or business. All packages include a satisfaction guarantee and 100% transparent pricing.</p>
+          <p className="text-primary-100 text-lg sm:text-xl max-w-2xl mx-auto font-medium">Flexible plans designed for small, medium, and large businesses. All packages include a satisfaction guarantee and 100% transparent pricing.</p>
         </div>
       </section>
 
